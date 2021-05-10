@@ -238,6 +238,7 @@ const AdminPage = {
               headers: { 'Content-Type': 'application/json' },
               body: jsonBody
           })
+          this.getUsers();
         },
         // почему не long polling? уже устаревшая технология, к тому же много ресурсов жрет в сравнении с этим
         // почему не websockets? потому что это уже слишком жирно для такой простой задачи
