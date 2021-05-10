@@ -122,7 +122,7 @@ const RegistrationForm = {
                         login: this.userRegister.name,
                         password: MD5(this.userRegister.pass)
                     })
-                })
+                });
                 this.$parent.$router.push('/');
             }
         }
@@ -147,11 +147,14 @@ const UserPage = {
       .then(json => {
           if (json.login != "none") {
             this.user = json.login;
+            if (json.is_admin == 1) this.$parent.$router.push('/admin');
           } else {
-            console.log("no user");
             this.$parent.$router.push('/');
           }
       });
+    },
+    data () {
+      return { user: '' }
     },
     methods: {
       logout: function() {
@@ -168,8 +171,62 @@ const UserPage = {
 const AdminPage = {
     template: 
       `<div>
-      <h1>admin</h1>
-       </div>`
+      <input type="text" class="admin-search" placeholder="поиск..">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>id</th>
+            <th>Логин</th>
+            <th>Админ?</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in items">
+            <td><a href="#">&#10006;</a></td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.login }}</td>
+            <td>{{ item.is_admin ? 'yep' : 'nope' }}</td>
+            <td><a href="#">&#10006;</a></td>
+          </tr>
+        </tbody>
+        </table>
+        <a v-show="true" href="#" class="admin-del-button">Удалить выбранное</a>
+        <a v-on:click="logout" href="#" class="logout-button">logout</a>
+       </div>`,
+       data() {
+         return {
+           items: []
+         }
+       },
+       mounted: function() {
+          fetch("http://localhost/api/get_users.php", {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'same-origin'
+          })
+          .then(response => {
+              return response.json();
+          })
+          // надо бы проверку замутить, ведь может как-то запрос и не выполнится.
+          // но по тз ничего не было сказано)))
+          .then(json => {
+              if (Array.isArray(json)) {
+                this.items = json;
+              }
+          });
+       },
+       methods: {
+        logout: function() {
+          fetch("http://localhost/api/user_logout.php", {
+              method: 'POST',
+              mode: 'cors',
+              credentials: 'same-origin'
+          })
+          this.$parent.$router.push('/');
+        }
+      }
 }
 
 const routes = [
@@ -186,7 +243,4 @@ const rootApp = new Vue({
     router: new VueRouter({
         routes
     }),
-    data: {
-      user: ''
-    }
 })

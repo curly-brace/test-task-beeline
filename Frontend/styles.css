@@ -1,4 +1,4 @@
-* { padding: 0; margin: 0; border: 0; list-style: none; font-size: 100%; }
+* { padding: 0; margin: 0; border: 0; list-style: none; font-size: 100%; border-collapse: collapse; }
 
 .main-header, .main-footer {
     height: 8vh;
@@ -33,9 +33,9 @@ h1.huge {
 
 .logout-button {
     display: block;
-    padding: 10px;
+    padding: 10px 0px;
     margin-top: 30px;
-    width: 50%;
+    width: 100%;
     text-decoration: none;
     text-transform: uppercase;
     text-align: center;
@@ -135,4 +135,105 @@ p.form-error {
     border-bottom: 1px solid #fff;
     outline: none;
     background: transparent;
+}
+
+.admin-search {
+    outline: none;
+    width: 100%;
+    background-color: #6ab6c9;
+    border: none;
+    margin-bottom: 10px;
+    padding: 10px 0px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    transition-duration: 0.5s;
+}
+
+.admin-del-button {
+    display: block;
+    text-align: center;
+    background-color: rgb(129, 37, 37);
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition-duration: 0.5s;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.admin-del-button:hover {
+    background-color: red;
+}
+
+.table {
+	width: 100%;
+	border: none;
+	margin-bottom: 20px;
+}
+
+.table thead th {
+	font-weight: bold;
+	text-align: center;
+	border: none;
+	padding: 10px 15px;
+	background: #005475;
+	font-size: 20px;
+    color: white;
+}
+
+.table thead tr th:first-child {
+	border-radius: 8px 0 0 8px;
+}
+
+.table thead tr th:last-child {
+	border-radius: 0 8px 8px 0;
+}
+
+.table tbody td {
+	text-align: center;
+	border: none;
+	padding: 10px 15px;
+	font-size: 20px;
+	vertical-align: center;
+}
+
+.table tbody tr:nth-child(even){
+	background: #e9e9e9;
+}
+
+.table tbody tr td:first-child {
+	border-radius: 8px 0 0 8px;
+}
+
+.table tbody tr td:last-child {
+	border-radius: 0 8px 8px 0;
+}
+
+.table a {
+    display: block;
+    background-color: rgb(129, 37, 37);
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition-duration: 0.5s;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.table a:hover {
+    background-color: red;
 }
