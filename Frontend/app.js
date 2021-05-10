@@ -13,6 +13,7 @@ const FormSwitcher = {
 const LoginForm = {
     template: 
     `<div class="login-form">
+    <form-switcher></form-switcher>
       <h2>Вход</h2>
       <form class="user-form" id="login-form" v-on:submit.prevent="submitForm">
         <div class="form-input">
@@ -39,21 +40,47 @@ const LoginForm = {
     },
     methods: {
         submitForm () {
+            let n = this.userLogin.name.trim();
             this.userValidate = {
-                name: !!this.userLogin.name.trim(),
-                pass: !!this.userLogin.name.trim(),
-                result: false
+                name: (n.length > 0) && (n.length < 32) && (/[A-Za-z0-9_-]/.test(n)),
+                pass: !!this.userLogin.pass.trim(),
+                result: true
             };
-            if (this.userValidate.result) alert("ok");
-            alert("not ok");
+            if (this.userValidate.name && this.userValidate.pass) {
+                // тут можно было подключить axios но я решил для теста сделать руками
+                // заодно промис заюзал
+                // отлов ошибок тут не стал делать, потому что нет времени на это
+                // да и какие тут могут быть ошибки? а так тут можно и статус проверить и catch прописать
+                fetch("http://localhost/api/user_login.php", {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        login: this.userLogin.name,
+                        password: MD5(this.userLogin.pass)
+                    })
+                })
+                .then(response => {
+                    return response.json();
+                })
+                .then(json => {
+                    if (json.result == "success") {
+                      this.userValidate.result = true;
+                      this.$parent.$router.push('/user');
+                    } else {
+                      this.userValidate.result = false;
+                    }
+                });
+            }
         }
-    }
+    },
 }
 
 const RegistrationForm = {
     template:
     // тут css-классы те-же, но это не так важно по-моему, потому-что зачем плодить сущности
     `<div class="login-form">
+    <form-switcher></form-switcher>
       <h2>Регистрация</h2>
       <form class="user-form" id="register-form" v-on:submit.prevent="submitForm">
         <div class="form-input">
@@ -80,22 +107,62 @@ const RegistrationForm = {
     },
     methods: {
         submitForm () {
+            let n = this.userRegister.name.trim();
             this.userValidate = {
-                name: !!this.userRegister.name.trim(),
-                pass: !!this.userRegister.name.trim(),
-                result: false
+                name: (n.length > 0) && (n.length < 32) && (/[A-Za-z0-9_-]/.test(n)),
+                pass: !!this.userRegister.pass.trim(),
+                result: true
             };
-            if (this.userValidate.result) alert("ok");
-            alert("not ok");
+            if (this.userValidate.name && this.userValidate.pass) {
+                fetch("http://localhost/api/user_register.php", {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        login: this.userRegister.name,
+                        password: MD5(this.userRegister.pass)
+                    })
+                })
+                this.$parent.$router.push('/');
+            }
         }
     }
 }
 
 const UserPage = {
     template: 
-      `<div>
-      <h1>user</h1>
-       </div>`
+      `<div class="wrapper">
+      <h1 class="huge">Hello, {{user}}</h1>
+      <a v-on:click="logout" href="#" class="logout-button">logout</a>
+       </div>`,
+    mounted: function () {
+      fetch("http://localhost/api/get_current_user.php", {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'same-origin'
+      })
+      .then(response => {
+          return response.json();
+      })
+      .then(json => {
+          if (json.login != "none") {
+            this.user = json.login;
+          } else {
+            console.log("no user");
+            this.$parent.$router.push('/');
+          }
+      });
+    },
+    methods: {
+      logout: function() {
+        fetch("http://localhost/api/user_logout.php", {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'same-origin'
+        })
+        this.$parent.$router.push('/');
+      }
+    }
 }
 
 const AdminPage = {
@@ -118,5 +185,8 @@ const rootApp = new Vue({
     el: '#app',
     router: new VueRouter({
         routes
-    })
+    }),
+    data: {
+      user: ''
+    }
 })

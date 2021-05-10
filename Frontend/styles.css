@@ -26,9 +26,30 @@
     align-items: center;
 }
 
-.form-switcher {
-    width: 400px;
+h1.huge {
+    font-size: 50px;
+    color: #222b2e;
+}
+
+.logout-button {
+    display: block;
     padding: 10px;
+    margin-top: 30px;
+    width: 50%;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    background: #ffb0b0;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+}
+
+.form-switcher {
+    width: 100%;
     display: flex;
     justify-content: center;
 }
@@ -58,7 +79,7 @@ p.form-error {
 
 .login-form {
     width: 400px;
-    padding: 40px;
+    padding: 30px;
     background: rgb(13, 71, 104);
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
