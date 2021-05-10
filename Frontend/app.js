@@ -206,21 +206,8 @@ const AdminPage = {
          }
        },
        mounted: function() {
-          fetch("http://localhost/api/get_users.php", {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'same-origin'
-          })
-          .then(response => {
-              return response.json();
-          })
-          // надо бы проверку замутить, ведь может как-то запрос и не выполнится.
-          // но по тз ничего не было сказано)))
-          .then(json => {
-              if (Array.isArray(json)) {
-                this.items = json;
-              }
-          });
+          this.getUsers();
+          this.setupStream();
        },
        methods: {
         logout: function() {
@@ -251,6 +238,33 @@ const AdminPage = {
               headers: { 'Content-Type': 'application/json' },
               body: jsonBody
           })
+        },
+        // почему не long polling? уже устаревшая технология, к тому же много ресурсов жрет в сравнении с этим
+        // почему не websockets? потому что это уже слишком жирно для такой простой задачи
+        setupStream: function() {
+          let es = new EventSource('http://localhost/api/feed.php');
+  
+          es.addEventListener('message', event => {
+              console.log(event.data);
+              this.getUsers();
+          }, false);
+        },
+        getUsers: function() {
+          fetch("http://localhost/api/get_users.php", {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'same-origin'
+          })
+          .then(response => {
+              return response.json();
+          })
+          // надо бы проверку замутить, ведь может как-то запрос и не выполнится.
+          // но по тз ничего не было сказано)))
+          .then(json => {
+              if (Array.isArray(json)) {
+                this.items = json;
+              }
+          });
         }
       },
       // впринципе есть еще вариант сделать через v-show, но я подумал так будет лучше

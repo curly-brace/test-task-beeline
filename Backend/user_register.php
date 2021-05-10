@@ -22,4 +22,8 @@ if (!empty($data->login) && !empty($data->password)) {
 	$q = "INSERT INTO users (login, password, is_admin) VALUES (?,?,?)";
 	//PDO самостоятельно борется с sql-injection, поэтому никаких mysql_escape_string нету =)
 	$db->prepare($q)->execute([$data->login, $data->password, 0]);
+	
+	// для автоапдейта
+	$q = "INSERT INTO feed (feed_ready) VALUES (1)";
+	$db->prepare($q)->execute();
 }
