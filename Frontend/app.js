@@ -187,21 +187,22 @@ const AdminPage = {
         </thead>
         <tbody>
           <tr v-for="item in filteredItems">
-            <td><a href="#">&#10006;</a></td>
+            <td><input type="checkbox" :value=" item.id " v-model="checkedIds"></td>
             <td>{{ item.id }}</td>
             <td>{{ item.login }}</td>
             <td>{{ item.is_admin ? 'yep' : 'nope' }}</td>
-            <td><a href="#">&#10006;</a></td>
+            <td><a v-on:click="deleteRows(item.id)" href="#">&#10006;</a></td>
           </tr>
         </tbody>
         </table>
-        <a v-show="true" href="#" class="admin-del-button">Удалить выбранное</a>
+        <a v-show="true" v-on:click="deleteRows" href="#" class="admin-del-button">Удалить выбранное</a>
         <a v-on:click="logout" href="#" class="logout-button">logout</a>
        </div>`,
        data() {
          return {
            items: [],
-           searchString: ''
+           searchString: '',
+           checkedIds: []
          }
        },
        mounted: function() {
@@ -236,8 +237,24 @@ const AdminPage = {
                 if (x[key] > y[key]) return 1;
                 return 0;
             });
+        },
+        deleteRows: function(id) {
+          let jsonBody = '';
+          if (!isNaN(parseFloat(id)) && isFinite(id)) {
+            jsonBody = JSON.stringify( [id] );
+          } else {
+            jsonBody = JSON.stringify( this.checkedIds );
+          }
+          fetch("http://localhost/api/remove_users.php", {
+              method: 'POST',
+              mode: 'cors',
+              headers: { 'Content-Type': 'application/json' },
+              body: jsonBody
+          })
         }
       },
+      // впринципе есть еще вариант сделать через v-show, но я подумал так будет лучше
+      // а еще лучше фильтровать на сервере, но в тз такого не было)
       computed: {
         filteredItems: function() {
           return this.items.filter(item => item.login.startsWith(this.searchString));
