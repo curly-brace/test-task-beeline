@@ -1,0 +1,117 @@
+* { padding: 0; margin: 0; border: 0; list-style: none; font-size: 100%; }
+
+.main-header, .main-footer {
+    height: 8vh;
+    background-color: #366d86;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main-header>h1, .main-footer>h1 {
+    font-size: 32px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.main-content {
+    height: 84vh;
+}
+
+.wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-switcher {
+    width: 400px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.form-switcher>a {
+    display: block;
+    padding: 10px;
+    margin: 5px;
+    width: 50%;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    background: #00b7ff;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+}
+
+/* да тут не очень красиво, что так мало стилей, можно было бы сделать
+что б не прыгала форма при показе ошибок, но что-то времени мало уже остается */
+p.form-error {
+    color: red;
+}
+
+.login-form {
+    width: 400px;
+    padding: 40px;
+    background: rgb(13, 71, 104);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+}
+
+.login-form h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+    font-size: 32px;
+}
+
+.login-form input[type=submit] {
+    width: 100%;
+    background-color: #6ab6c9;
+    border: none;
+    color: white;
+    margin-top: 20px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    transition-duration: 0.5s;
+}
+
+.login-form input[type=submit]:hover {
+    background-color: #366f7e;
+}
+
+.form-input {
+    position: relative;
+}
+  
+.form-input input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}

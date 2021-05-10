@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- если браузер не поддерживает ЕС6, ничего не будет видно -->
+<html lang="ru" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Тестовая регистрация</title>
+
+  <!-- проверка браузера на поддержку модулей, а значит ЕС6 -->
+  <script type="module">
+    document.documentElement.classList.remove('no-js');
+    document.documentElement.classList.add('js');
+  </script>
+
+  <link rel="stylesheet" href="./styles.css">
+
+  <!-- поидее все браузеры поддерживают svg, но мало ли -->
+  <link rel="icon" href="./favicon.ico">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <!-- используется в некоторых мобильных браузера, ну да ладно -->
+  <meta name="theme-color" content="#1E90FF">
+</head>
+
+<body>
+  <div id = "app">
+    <header class="main-header">
+      <h1>Super Cool App</h1>
+    </header>
+
+    <section class="main-content">
+      <div class="wrapper">
+        <form-switcher></form-switcher>
+        <router-view></router-view>
+      </div>
+    </section>
+
+    <footer class="main-footer">
+      <h1>&copy; beeline 2021 =)</h1>
+    </footer>
+  </div>
+
+  <!-- почему код тут? потому что так правильнее, что бы код загружался после прогрузки всего документа-->
+  <script src="./vue.js"></script>
+  <script src="./vue-router.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
