@@ -171,19 +171,22 @@ const UserPage = {
 const AdminPage = {
     template: 
       `<div>
-      <input type="text" class="admin-search" placeholder="поиск..">
+      <!-- v-model в данном случае проще чем v-on -->
+      <input v-model="searchString" type="text" class="admin-search" placeholder="поиск..">
+      <!-- выбор осуществляется кликом по строке -->
+      <!-- сортировка осуществляется кликом по одному из заголовков -->
       <table class="table">
         <thead>
           <tr>
             <th></th>
-            <th>id</th>
-            <th>Логин</th>
-            <th>Админ?</th>
+            <th v-on:click="sort('id')">id</th>
+            <th v-on:click="sort('login')">Логин</th>
+            <th v-on:click="sort('is_admin')">Админ?</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in items">
+          <tr v-for="item in filteredItems">
             <td><a href="#">&#10006;</a></td>
             <td>{{ item.id }}</td>
             <td>{{ item.login }}</td>
@@ -197,7 +200,8 @@ const AdminPage = {
        </div>`,
        data() {
          return {
-           items: []
+           items: [],
+           searchString: ''
          }
        },
        mounted: function() {
@@ -225,6 +229,18 @@ const AdminPage = {
               credentials: 'same-origin'
           })
           this.$parent.$router.push('/');
+        },
+        sort: function(key) {
+            this.items.sort(function(x, y) {
+                if (x[key] < y[key]) return -1;
+                if (x[key] > y[key]) return 1;
+                return 0;
+            });
+        }
+      },
+      computed: {
+        filteredItems: function() {
+          return this.items.filter(item => item.login.startsWith(this.searchString));
         }
       }
 }

@@ -185,6 +185,7 @@ p.form-error {
 .table thead th {
 	font-weight: bold;
 	text-align: center;
+    cursor: pointer;
 	border: none;
 	padding: 10px 15px;
 	background: #005475;
