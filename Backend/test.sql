@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2021 at 03:19 PM
+-- Generation Time: May 10, 2021 at 08:45 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.18
 
@@ -24,6 +24,16 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `feed`
+--
+
+CREATE TABLE `feed` (
+  `feed_ready` tinyint(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -40,9 +50,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `login`, `password`, `is_admin`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
-(6, 'waylander', '81dc9bdb52d04dc20036dbd8313ed055', 0),
-(7, 'test', '098f6bcd4621d373cade4e832627b4f6', 0),
-(8, '1234', 'd93591bdf7860e1e4ee2fca799911215', 0);
+(6, 'waylander', '81dc9bdb52d04dc20036dbd8313ed055', 0);
 
 --
 -- Indexes for dumped tables
@@ -62,7 +70,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
